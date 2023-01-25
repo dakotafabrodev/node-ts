@@ -16,8 +16,10 @@ export interface IModerator {
   isAvailableForReport: boolean;
 }
 
-export interface IPostModel extends IPost, Document {}
-export interface IPostDocument extends Model<IPostDocument> {}
+export interface IPostDocument extends IPost, Document {}
+export interface IPostModel extends Model<IPostDocument> {}
 
-export interface IModeratorModel extends IModerator, Document {}
-export interface IModeratorDocument extends Model<IModeratorDocument> {}
+export interface IModeratorDocument extends IModerator, Document {
+  isAvailable: (this: IModeratorDocument) => Promise<boolean>;
+}
+export interface IModeratorModel extends Model<IModeratorDocument> {}

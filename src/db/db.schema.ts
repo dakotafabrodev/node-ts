@@ -1,5 +1,6 @@
 import { ObjectId } from "mongodb";
 import { Schema } from "mongoose";
+import { isAvailable } from "./db.methods";
 
 const PostSchema = new Schema({
   content: String,
@@ -16,5 +17,7 @@ const ModeratorSchema = new Schema({
   moderationCount: Number,
   isAvailableForReport: Boolean,
 });
+
+ModeratorSchema.methods.isAvailable = isAvailable;
 
 export { PostSchema, ModeratorSchema };

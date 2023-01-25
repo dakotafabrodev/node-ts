@@ -1,10 +1,11 @@
 import { model } from "mongoose";
-import { IPostDocument, IModeratorDocument } from "./db.types";
-import { PostSchema, ModeratorSchema } from "./db.schema";
-import { DB_COLLECTIONS } from ".";
+import { IPostDocument } from "./db.types";
+import { IModeratorDocument } from "./db.types";
+import { PostSchema } from "./db.schema";
+import { ModeratorSchema } from "./db.schema";
 
-export const PostModel = model<IPostDocument>(DB_COLLECTIONS.posts, PostSchema);
-export const MoeratorModel = model<IModeratorDocument>(
-  DB_COLLECTIONS.moderators,
+export const PostModel = model<IPostDocument>("post", PostSchema);
+export const ModeratorModel = model<IModeratorDocument>(
+  "moderator",
   ModeratorSchema
 );

@@ -31,4 +31,4 @@ const connectToMongoDB = async (): Promise<object> => {
   }
 };
 
-export default connectToMongoDB();
+export default connectToMongoDB;

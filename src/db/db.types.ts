@@ -16,10 +16,14 @@ export interface IModerator {
   isAvailableForReport: boolean;
 }
 
-export interface IPostDocument extends IPost, Document {}
+export interface IPostDocument extends IPost, Document {
+  setModeratedBy: (this: IPostDocument, moderatedBy: string) => string;
+}
 export interface IPostModel extends Model<IPostDocument> {}
 
 export interface IModeratorDocument extends IModerator, Document {
   isAvailable: (this: IModeratorDocument) => Promise<boolean>;
+  popReport: (this: IModeratorDocument) => Promise<IPostDocument>;
+  pushReport: (this: IModeratorDocument, reportedPost: IPostDocument) => string;
 }
 export interface IModeratorModel extends Model<IModeratorDocument> {}

@@ -21,3 +21,6 @@ const ModeratorSchema = new mongoose_1.Schema({
 });
 exports.ModeratorSchema = ModeratorSchema;
 ModeratorSchema.methods.isAvailable = db_methods_1.isAvailable;
+ModeratorSchema.methods.popReport = db_methods_1.popReport;
+ModeratorSchema.methods.pushReport = db_methods_1.pushReport;
+ModeratorSchema.methods.incrementModerationCount = db_methods_1.incrementModerationCount;

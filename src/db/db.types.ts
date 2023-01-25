@@ -25,5 +25,6 @@ export interface IModeratorDocument extends IModerator, Document {
   isAvailable: (this: IModeratorDocument) => Promise<boolean>;
   popReport: (this: IModeratorDocument) => Promise<IPostDocument>;
   pushReport: (this: IModeratorDocument, reportedPost: IPostDocument) => string;
+  incrementModerationCount: (this: IModeratorDocument) => number;
 }
 export interface IModeratorModel extends Model<IModeratorDocument> {}

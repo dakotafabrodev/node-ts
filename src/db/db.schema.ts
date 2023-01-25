@@ -1,6 +1,11 @@
 import { ObjectId } from "mongodb";
 import { Schema } from "mongoose";
-import { isAvailable } from "./db.methods";
+import {
+  incrementModerationCount,
+  isAvailable,
+  popReport,
+  pushReport,
+} from "./db.methods";
 
 const PostSchema = new Schema({
   content: String,
@@ -19,5 +24,8 @@ const ModeratorSchema = new Schema({
 });
 
 ModeratorSchema.methods.isAvailable = isAvailable;
+ModeratorSchema.methods.popReport = popReport;
+ModeratorSchema.methods.pushReport = pushReport;
+ModeratorSchema.methods.incrementModerationCount = incrementModerationCount;
 
 export { PostSchema, ModeratorSchema };

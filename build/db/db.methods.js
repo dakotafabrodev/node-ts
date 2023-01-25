@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.setModeratedBy = exports.pushReport = exports.popReport = exports.isAvailable = void 0;
+exports.setModeratedBy = exports.pushReport = exports.popReport = exports.incrementModerationCount = exports.isAvailable = void 0;
 // IModeratorDocument Methods
 function isAvailable() {
     const length = this.get("activeReport").length;
@@ -8,6 +8,12 @@ function isAvailable() {
     return this.isAvailableForReport;
 }
 exports.isAvailable = isAvailable;
+function incrementModerationCount() {
+    const moderationCount = this.get("moderationCount");
+    this.set({ moderationCount: moderationCount + 1 });
+    return this.moderationCount;
+}
+exports.incrementModerationCount = incrementModerationCount;
 function popReport() {
     const activeReport = this.get("activeReport").pop();
     return activeReport;

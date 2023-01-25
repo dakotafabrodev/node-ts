@@ -7,6 +7,12 @@ export function isAvailable(this: IModeratorDocument): boolean {
   return this.isAvailableForReport;
 }
 
+export function incrementModerationCount(this: IModeratorDocument): number {
+  const moderationCount = this.get("moderationCount");
+  this.set({ moderationCount: moderationCount + 1 });
+  return this.moderationCount;
+}
+
 export function popReport(this: IModeratorDocument): object {
   const activeReport = this.get("activeReport").pop();
   return activeReport;

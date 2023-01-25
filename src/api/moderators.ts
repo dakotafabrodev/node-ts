@@ -1,21 +1,26 @@
 import express, { Request, Response } from "express";
 import { json } from "body-parser";
+import { getAllModerators, getAvailableModerators } from "./helpers/moderators";
 require("dotenv").config();
 
 const jsonParser = json();
 const router = express.Router();
 
-router.get("/", (req: Request, res: Response): void => {
+router.get("/", async (req: Request, res: Response): Promise<void> => {
   try {
-    // this route will get all moderators
+    const allModerators = await getAllModerators();
+
+    res.status(200).json({ allModerators: allModerators });
   } catch (x) {
     res.status(400).json({ error: x });
   }
 });
 
-router.get("/available", (req: Request, res: Response): void => {
+router.get("/available", async (req: Request, res: Response): Promise<void> => {
   try {
-    // this route will get all available moderators
+    const availableModerators = await getAvailableModerators();
+
+    res.status(200).json({ available: availableModerators });
   } catch (x) {
     res.status(400).json({ error: x });
   }

@@ -18,7 +18,7 @@ describe("API Endpoints Tests", (): void => {
     test("GET /api/reports - gets all reports", async (): Promise<void> => {
       const res = await request(app).get("/api/reports");
 
-      expect(Array.isArray(res.body.allReports)).toBe(true);
+      expect(Array.isArray(res.body.allPosts)).toBe(true);
     });
 
     test("GET /api/reports/flagged - gets all flagged reports", async (): Promise<void> => {
@@ -181,7 +181,7 @@ describe("API Endpoints Tests", (): void => {
         const testModeratorObj = new ModeratorModel({
           _id: new ObjectId("63cecf1be39f7bf75daa01b3"),
           name: "mod1-test",
-          activeReport: [],
+          activeReport: [testPostObj1._id],
           moderationCount: 0,
           isAvailableForReport: true,
         });

@@ -1,6 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.setModeratedBy = exports.pushReport = exports.popReport = exports.incrementModerationCount = exports.isAvailable = void 0;
+exports.setModeratorDecision = exports.setReportedInappropriate = exports.setResolved = exports.setModeratedBy = exports.pushReport = exports.popReport = exports.incrementModerationCount = exports.isAvailable = void 0;
 // IModeratorDocument Methods
 function isAvailable() {
     const length = this.get("activeReport").length;
@@ -44,3 +44,18 @@ function setModeratedBy(moderatorId) {
     return moderatedBy;
 }
 exports.setModeratedBy = setModeratedBy;
+function setResolved() {
+    this.set({ isResolved: true });
+    return this.isResolved;
+}
+exports.setResolved = setResolved;
+function setReportedInappropriate() {
+    this.set({ reportedInappropriate: true });
+    return this.reportedInappropriate;
+}
+exports.setReportedInappropriate = setReportedInappropriate;
+function setModeratorDecision(moderatorDecision) {
+    this.set({ isInappropriate: moderatorDecision });
+    return this.isInappropriate;
+}
+exports.setModeratorDecision = setModeratorDecision;

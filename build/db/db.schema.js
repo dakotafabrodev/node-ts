@@ -13,6 +13,10 @@ const PostSchema = new mongoose_1.Schema({
     moderatedBy: [{ type: mongodb_1.ObjectId || String, maxLength: 1 }],
 });
 exports.PostSchema = PostSchema;
+PostSchema.methods.setModeratedBy = db_methods_1.setModeratedBy;
+PostSchema.methods.setReportedInappropriate = db_methods_1.setReportedInappropriate;
+PostSchema.methods.setResolved = db_methods_1.setResolved;
+PostSchema.methods.setModeratorDecision = db_methods_1.setModeratorDecision;
 const ModeratorSchema = new mongoose_1.Schema({
     name: String,
     activeReport: Object,

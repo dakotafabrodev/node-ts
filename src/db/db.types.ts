@@ -18,6 +18,12 @@ export interface IModerator {
 
 export interface IPostDocument extends IPost, Document {
   setModeratedBy: (this: IPostDocument, moderatedBy: string) => string;
+  setReportedInappropriate: (this: IPostDocument) => boolean;
+  setResolved: (this: IPostDocument) => boolean;
+  setModeratorDecision: (
+    this: IPostDocument,
+    moderatorDecision: boolean
+  ) => boolean;
 }
 export interface IPostModel extends Model<IPostDocument> {}
 

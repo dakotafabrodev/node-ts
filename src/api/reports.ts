@@ -1,6 +1,5 @@
 import express, { Request, Response } from "express";
 import { json } from "body-parser";
-import { isRegularExpressionLiteral } from "typescript";
 import {
   getAllPosts,
   getNextFlaggedReport,
@@ -10,6 +9,7 @@ import {
 import { db, DB_COLLECTIONS } from "../db";
 import { ObjectId } from "mongodb";
 import { getModerator } from "./helpers/moderators";
+import { setReportedInappropriate, setResolved } from "../db/db.methods";
 require("dotenv").config();
 
 const jsonParser = json();
@@ -43,17 +43,14 @@ router.put(
   async (req: Request, res: Response): Promise<void> => {
     const { postId } = req.body;
     try {
+      const currentPost = await getPost(postId);
+      currentPost.setReportedInappropriate();
+
       const updatedPost = await db.collection(DB_COLLECTIONS.posts).updateOne(
         {
           _id: new ObjectId(postId),
         },
-        {
-          $set: {
-            reportedInappropriate: true,
-            isInappropriate: false,
-            isResolved: false,
-          },
-        }
+        currentPost
       );
 
       const updatedPostToSend = await getPost(postId);
@@ -72,36 +69,23 @@ router.put(
   "/submit_report",
   jsonParser,
   async (req: Request, res: Response): Promise<void> => {
-    // this route will expect req.body to have updatedPostBody, postId, and moderatedBy
-    // update isInappropriate, isResolved, and moderatedBy
-    // get next flagged report
-    // find moderator through moderatedBy
-    // update moderator.activeReport with next report & isAvailableForReport: false & increment moderationCount by 1
-    // autoAssign reports (possibly move this to its own route?? router.put("/assign"))
-    // send status code 200
-    // send data with postData and moderatorData
-
     const { updatedPostBody, postId, moderatedBy } = req.body;
     try {
+      const currentPost = await getPost(postId);
+      currentPost.setModeratorDecision(updatedPostBody.isInappropriate);
+      currentPost.setResolved();
+      currentPost.setModeratedBy(moderatedBy);
+
       const updatedPost = await db.collection(DB_COLLECTIONS.posts).updateOne(
         {
           _id: new ObjectId(postId),
         },
-        {
-          $set: {
-            isInappropriate: updatedPostBody.isInappropriate,
-            isResolved: true,
-            moderatedBy: new ObjectId(moderatedBy),
-          },
-        }
+        currentPost
       );
-
-      const updatedPostToSend = await getPost(postId);
 
       const nextReport = await getNextFlaggedReport();
 
       const currentModerator = await getModerator(moderatedBy);
-
       currentModerator.pushReport(nextReport._id);
       currentModerator.isAvailable();
       currentModerator.incrementModerationCount();
@@ -116,6 +100,7 @@ router.put(
         );
 
       const updatedModeratorToSend = await getModerator(moderatedBy);
+      const updatedPostToSend = await getPost(postId);
 
       res.status(200).json({
         data: {

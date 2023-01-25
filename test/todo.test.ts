@@ -3,6 +3,8 @@ import app from "../src/index";
 import connectToMongoDB from "../src/db";
 import { PostModel, ModeratorModel } from "../src/db/db.model";
 import { ObjectId } from "mongodb";
+import { createExportAssignment } from "typescript";
+import { createPost } from "../src/api/helpers/reports";
 
 describe("API Endpoints Tests", (): void => {
   describe("GET ROUTES", (): void => {
@@ -39,6 +41,57 @@ describe("API Endpoints Tests", (): void => {
       expect(res.body).toEqual({
         msg: "No routes matched!",
         api_docs: "this will be a link to a notable shared note",
+      });
+    });
+
+    describe("PUT ROUTES", (): void => {
+      test("PUT /api/reports/flag_for_review - updates a post to flag for review", async (): Promise<void> => {
+        const post = new PostModel({
+          content: "Keep going, friend!",
+          author: "author100",
+          reportedInappropriate: false,
+          isInappropriate: false,
+          isResolved: false,
+          moderatedBy: "",
+        });
+
+        await createPost(post);
+
+        const res = await request(app)
+          .put("/api/reports/flag_for_review")
+          .send({ postId: post._id });
+
+        expect(res.status).toEqual(200);
+        expect(res.body.data).toHaveProperty("postSuccess");
+        expect(res.body.data).toHaveProperty("post");
+        expect(res.body.data.post).toHaveProperty("_id");
+      });
+    });
+
+    describe("PUT /api/reports/submit_report", (): void => {
+      const postId = "63d00f18bd995650e2b8321e";
+      const moderatorId = "63d00f1bbd995650e2b8322a";
+      const updatedPost = {
+        content: "I am inappropriate!",
+        author: "author1",
+        reportedInappropriate: false,
+        isInappropriate: false,
+        isResolved: false,
+        moderatedBy: moderatorId,
+      };
+
+      test("updates a post's reportedInappropriate, isInappropriate, and isResolved properties", async (): Promise<void> => {
+        const res = await request(app).put("/api/reports/submit_report").send({
+          updatedPostBody: updatedPost,
+          postId: postId,
+          moderatedBy: moderatorId,
+        });
+
+        expect(res.status).toEqual(200);
+        expect(res.body.data.postData.postSuccess.acknowledged).toEqual(true);
+        expect(res.body.data.postData.post.reportedInappropriate).toEqual(true);
+        expect(res.body.data.postData.post.isInappropriate).toEqual(false);
+        expect(res.body.data.postData.post.isResolved).toEqual(true);
       });
     });
   });

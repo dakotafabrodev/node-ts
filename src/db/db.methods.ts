@@ -1,4 +1,9 @@
-import { IModeratorDocument, IPostDocument, IPostModel } from "./db.types";
+import {
+  IModeratorDocument,
+  IPost,
+  IPostDocument,
+  IPostModel,
+} from "./db.types";
 
 // IModeratorDocument Methods
 export function isAvailable(this: IModeratorDocument): boolean {
@@ -48,4 +53,22 @@ export function setModeratedBy(
   }
 
   return moderatedBy;
+}
+
+export function setResolved(this: IPostDocument): boolean {
+  this.set({ isResolved: true });
+  return this.isResolved;
+}
+
+export function setReportedInappropriate(this: IPostDocument): boolean {
+  this.set({ reportedInappropriate: true });
+  return this.reportedInappropriate;
+}
+
+export function setModeratorDecision(
+  this: IPostDocument,
+  moderatorDecision: boolean
+): boolean {
+  this.set({ isInappropriate: moderatorDecision });
+  return this.isInappropriate;
 }

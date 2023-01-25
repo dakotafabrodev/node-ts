@@ -44,15 +44,11 @@ router.get("/flagged", (req, res) => __awaiter(void 0, void 0, void 0, function*
 router.put("/flag_for_review", jsonParser, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     const { postId } = req.body;
     try {
+        const currentPost = yield (0, reports_1.getPost)(postId);
+        currentPost.setReportedInappropriate();
         const updatedPost = yield db_1.db.collection(db_1.DB_COLLECTIONS.posts).updateOne({
             _id: new mongodb_1.ObjectId(postId),
-        }, {
-            $set: {
-                reportedInappropriate: true,
-                isInappropriate: false,
-                isResolved: false,
-            },
-        });
+        }, currentPost);
         const updatedPostToSend = yield (0, reports_1.getPost)(postId);
         res
             .status(200)
@@ -64,26 +60,15 @@ router.put("/flag_for_review", jsonParser, (req, res) => __awaiter(void 0, void 
     }
 }));
 router.put("/submit_report", jsonParser, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    // this route will expect req.body to have updatedPostBody, postId, and moderatedBy
-    // update isInappropriate, isResolved, and moderatedBy
-    // get next flagged report
-    // find moderator through moderatedBy
-    // update moderator.activeReport with next report & isAvailableForReport: false & increment moderationCount by 1
-    // autoAssign reports (possibly move this to its own route?? router.put("/assign"))
-    // send status code 200
-    // send data with postData and moderatorData
     const { updatedPostBody, postId, moderatedBy } = req.body;
     try {
+        const currentPost = yield (0, reports_1.getPost)(postId);
+        currentPost.setModeratorDecision(updatedPostBody.isInappropriate);
+        currentPost.setResolved();
+        currentPost.setModeratedBy(moderatedBy);
         const updatedPost = yield db_1.db.collection(db_1.DB_COLLECTIONS.posts).updateOne({
             _id: new mongodb_1.ObjectId(postId),
-        }, {
-            $set: {
-                isInappropriate: updatedPostBody.isInappropriate,
-                isResolved: true,
-                moderatedBy: new mongodb_1.ObjectId(moderatedBy),
-            },
-        });
-        const updatedPostToSend = yield (0, reports_1.getPost)(postId);
+        }, currentPost);
         const nextReport = yield (0, reports_1.getNextFlaggedReport)();
         const currentModerator = yield (0, moderators_1.getModerator)(moderatedBy);
         currentModerator.pushReport(nextReport._id);
@@ -95,6 +80,7 @@ router.put("/submit_report", jsonParser, (req, res) => __awaiter(void 0, void 0,
             _id: new mongodb_1.ObjectId(moderatedBy),
         }, currentModerator);
         const updatedModeratorToSend = yield (0, moderators_1.getModerator)(moderatedBy);
+        const updatedPostToSend = yield (0, reports_1.getPost)(postId);
         res.status(200).json({
             data: {
                 postData: {

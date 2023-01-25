@@ -5,6 +5,10 @@ import {
   isAvailable,
   popReport,
   pushReport,
+  setModeratedBy,
+  setModeratorDecision,
+  setReportedInappropriate,
+  setResolved,
 } from "./db.methods";
 
 const PostSchema = new Schema({
@@ -15,6 +19,11 @@ const PostSchema = new Schema({
   isResolved: Boolean,
   moderatedBy: [{ type: ObjectId || String, maxLength: 1 }],
 });
+
+PostSchema.methods.setModeratedBy = setModeratedBy;
+PostSchema.methods.setReportedInappropriate = setReportedInappropriate;
+PostSchema.methods.setResolved = setResolved;
+PostSchema.methods.setModeratorDecision = setModeratorDecision;
 
 const ModeratorSchema = new Schema({
   name: String,

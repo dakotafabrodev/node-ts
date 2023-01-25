@@ -34,6 +34,12 @@
 | `postId`          | `string`        | **Required**. \_id of post to update                                |
 | `moderatedBy`     | `string`        | **Required**. \_id of moderator who submitted report                |
 
+##### Auto Assign Unresolved Posts to Available Moderators
+
+```http
+  PUT /api/reports/auto_assign
+```
+
 #### 🧑🏽‍💻 Moderators
 
 ##### Get all moderators

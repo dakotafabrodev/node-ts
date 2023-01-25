@@ -8,6 +8,7 @@ This project features a Node.js + TS + Express API that:
 - allows moderators to review and submit flagged reports
 - allows moderators to update the resolved status of a post
 - automatically assigns a new post to the next available moderator after a report is resolved
+- automatically assigns unresolved posts to available moderators
 
 ## 💪🏽 Challenges
 

@@ -8,7 +8,11 @@ import {
 } from "./helpers/reports";
 import { db, DB_COLLECTIONS } from "../db";
 import { ObjectId } from "mongodb";
-import { getModerator } from "./helpers/moderators";
+import {
+  autoAssignReports,
+  getAvailableModerators,
+  getModerator,
+} from "./helpers/moderators";
 import { setReportedInappropriate, setResolved } from "../db/db.methods";
 require("dotenv").config();
 
@@ -118,6 +122,18 @@ router.put(
     }
   }
 );
+
+router.put("/auto_assign", async (req: Request, res: Response) => {
+  try {
+    const unresolvedPosts = await getUnresolvedPosts();
+    const availableModerators = await getAvailableModerators();
+
+    autoAssignReports(unresolvedPosts, availableModerators);
+  } catch (x) {
+    console.error(x);
+    res.status(400).json({ error: x });
+  }
+});
 
 router.post("/removed", jsonParser, (req: Request, res: Response): void => {
   // this route will add an inappropriate resolved post to a REMOVED db collection

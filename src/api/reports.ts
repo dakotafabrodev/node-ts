@@ -72,6 +72,7 @@ router.put(
     const { updatedPostBody, postId, moderatedBy } = req.body;
     try {
       const currentPost = await getPost(postId);
+      currentPost.setReportedInappropriate();
       currentPost.setModeratorDecision(updatedPostBody.isInappropriate);
       currentPost.setResolved();
       currentPost.setModeratedBy(moderatedBy);
@@ -104,12 +105,10 @@ router.put(
 
       res.status(200).json({
         data: {
-          postData: {
-            postData: { postSuccess: updatedPost, post: updatedPostToSend },
-            moderatorData: {
-              moderatorSuccess: updatedModerator,
-              moderator: updatedModeratorToSend,
-            },
+          postData: { postSuccess: updatedPost, post: updatedPostToSend },
+          moderatorData: {
+            moderatorSuccess: updatedModerator,
+            moderator: updatedModeratorToSend,
           },
         },
       });

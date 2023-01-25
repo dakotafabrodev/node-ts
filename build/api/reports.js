@@ -63,6 +63,7 @@ router.put("/submit_report", jsonParser, (req, res) => __awaiter(void 0, void 0,
     const { updatedPostBody, postId, moderatedBy } = req.body;
     try {
         const currentPost = yield (0, reports_1.getPost)(postId);
+        currentPost.setReportedInappropriate();
         currentPost.setModeratorDecision(updatedPostBody.isInappropriate);
         currentPost.setResolved();
         currentPost.setModeratedBy(moderatedBy);
@@ -83,12 +84,10 @@ router.put("/submit_report", jsonParser, (req, res) => __awaiter(void 0, void 0,
         const updatedPostToSend = yield (0, reports_1.getPost)(postId);
         res.status(200).json({
             data: {
-                postData: {
-                    postData: { postSuccess: updatedPost, post: updatedPostToSend },
-                    moderatorData: {
-                        moderatorSuccess: updatedModerator,
-                        moderator: updatedModeratorToSend,
-                    },
+                postData: { postSuccess: updatedPost, post: updatedPostToSend },
+                moderatorData: {
+                    moderatorSuccess: updatedModerator,
+                    moderator: updatedModeratorToSend,
                 },
             },
         });

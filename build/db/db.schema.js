@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.ModeratorSchema = exports.PostSchema = void 0;
 const mongodb_1 = require("mongodb");
 const mongoose_1 = require("mongoose");
+const db_methods_1 = require("./db.methods");
 const PostSchema = new mongoose_1.Schema({
     content: String,
     author: String,
@@ -19,3 +20,4 @@ const ModeratorSchema = new mongoose_1.Schema({
     isAvailableForReport: Boolean,
 });
 exports.ModeratorSchema = ModeratorSchema;
+ModeratorSchema.methods.isAvailable = db_methods_1.isAvailable;

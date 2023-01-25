@@ -39,4 +39,4 @@ const connectToMongoDB = () => __awaiter(void 0, void 0, void 0, function* () {
         return { status: 400, msg: "Bad Request - Could Not Connect" };
     }
 });
-exports.default = connectToMongoDB();
+exports.default = connectToMongoDB;

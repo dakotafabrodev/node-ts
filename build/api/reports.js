@@ -102,7 +102,6 @@ router.put("/auto_assign", (req, res) => __awaiter(void 0, void 0, void 0, funct
         const unresolvedPosts = yield (0, reports_1.getUnresolvedPosts)();
         const availableModerators = yield (0, moderators_1.getAvailableModerators)();
         const autoAssign = yield (0, moderators_1.autoAssignReports)(unresolvedPosts, availableModerators);
-        console.log(autoAssign);
         res.status(200).json(autoAssign);
     }
     catch (x) {

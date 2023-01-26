@@ -16,7 +16,7 @@ app.get("/", (req, res) => {
     try {
         res.json({
             msg: "We out here, Lex!",
-            api_docs: "this will be a link to a notable shared note",
+            api_docs: "https://echo.notable.app/7bb13d0a86f3c9102cab971f9eb3bab9e55a8380d5654f7c54c72c4e36820c71",
         });
     }
     catch (x) {
@@ -28,7 +28,7 @@ app.use("/api", index_1.default);
 app.get("*", (req, res) => {
     res.json({
         msg: "No routes matched!",
-        api_docs: "this will be a link to a notable shared note",
+        api_docs: "https://echo.notable.app/7bb13d0a86f3c9102cab971f9eb3bab9e55a8380d5654f7c54c72c4e36820c71",
     });
 });
 app.listen(process.env.PORT || PORT, () => {

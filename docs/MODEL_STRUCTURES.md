@@ -16,6 +16,18 @@
 
 Takes in a moderator \_id as parameter and updates it 'moderatedBy' property. To be used prior to making change in MongoDB.
 
+#### .setReportedInappropriate()
+
+Sets reportedInappropriate property to true.
+
+#### .setResolved()
+
+Sets isResolved to true.
+
+#### .setModeratorDecision ( moderatorDecision )
+
+Takes in a boolean and sets isAppropriate to the value passed in.
+
 ### Moderator Model
 
 #### Moderator Model Structure

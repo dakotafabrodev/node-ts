@@ -15,7 +15,8 @@ app.get("/", (req: Request, res: Response): void => {
   try {
     res.json({
       msg: "We out here, Lex!",
-      api_docs: "this will be a link to a notable shared note",
+      api_docs:
+        "https://echo.notable.app/7bb13d0a86f3c9102cab971f9eb3bab9e55a8380d5654f7c54c72c4e36820c71",
     });
   } catch (x) {
     console.error(x);
@@ -28,7 +29,8 @@ app.use("/api", api);
 app.get("*", (req: Request, res: Response): void => {
   res.json({
     msg: "No routes matched!",
-    api_docs: "this will be a link to a notable shared note",
+    api_docs:
+      "https://echo.notable.app/7bb13d0a86f3c9102cab971f9eb3bab9e55a8380d5654f7c54c72c4e36820c71",
   });
 });
 

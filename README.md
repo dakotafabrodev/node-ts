@@ -36,7 +36,7 @@ Because of the flexiblity needed in this project (specifically with auto assigni
 
 ✅ **Testing:** Jest
 
-### 🚕 API Routes Reference
+## 🚕 API Routes Reference
 
 [API Route Reference Guide](./docs/API_ROUTES.md)
 

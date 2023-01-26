@@ -132,7 +132,6 @@ router.put("/auto_assign", async (req: Request, res: Response) => {
       unresolvedPosts,
       availableModerators
     );
-    console.log(autoAssign);
 
     res.status(200).json(autoAssign);
   } catch (x) {

@@ -20,7 +20,7 @@ TypeScript was my biggest hurdle while building the project because I had not wo
 
 - Utilize Mongoose's static methods by adding methods that allow for more abstraction of db calls. I was able to use helper functions for these, but would like to learn how to implement them using Mongoose's static methods so I can use Mongoose to its fullest potential.
 
-## Acknowledgements
+## 👏🏽 Acknowledgements
 
 - Team Lex 🌈 Thank you for the opportunity to learn, develop, and demonstrate my skillset with this assessment. I learned so much and really enjoyed building this API!
 

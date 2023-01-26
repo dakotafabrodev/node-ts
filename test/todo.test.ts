@@ -3,8 +3,8 @@ import app from "../src/index";
 import connectToMongoDB from "../src/db";
 import { PostModel, ModeratorModel } from "../src/db/db.model";
 import { ObjectId } from "mongodb";
-import { createExportAssignment } from "typescript";
 import { createPost } from "../src/api/helpers/reports";
+require("dotenv").config();
 
 describe("API Endpoints Tests", (): void => {
   describe("GET ROUTES", (): void => {
@@ -68,8 +68,8 @@ describe("API Endpoints Tests", (): void => {
       });
 
       describe("PUT /api/reports/submit_report", (): void => {
-        const postId = "63d00f18bd995650e2b8321e";
-        const moderatorId = "63d00f1bbd995650e2b8322a";
+        const postId = process.env.TEST_OBJ_1;
+        const moderatorId = process.env.TEST_MOD_1;
         const updatedPost = {
           content: "I am inappropriate!",
           author: "author1",
@@ -95,6 +95,17 @@ describe("API Endpoints Tests", (): void => {
           );
           expect(res.body.data.postData.post.isInappropriate).toEqual(false);
           expect(res.body.data.postData.post.isResolved).toEqual(true);
+        });
+      });
+
+      describe("PUT /api/reports/auto_assign", (): void => {
+        test("Reports can be auto assigned and a status code of 200 is sent back", async (): Promise<void> => {
+          const res = await request(app).put("/api/reports/auto_assign");
+
+          expect(res.status).toEqual(200);
+          expect(res.body).toEqual({
+            msg: "Unresolved posts auto-assigned to available moderators.",
+          });
         });
       });
     });
@@ -172,7 +183,7 @@ describe("API Endpoints Tests", (): void => {
 
       test("pushReport pushes a new post on to a Moderator object's activeReport array ONLY if empty and returns the updated moderator object", (): void => {
         const testPostObj1 = new PostModel({
-          _id: new ObjectId("63cecf1be39f7bf75daa01a9"),
+          _id: new ObjectId(process.env.TEST_OBJ_1),
           content: "I am inappropriate!",
           author: "author1",
           reportedInappropriate: true,
@@ -183,7 +194,7 @@ describe("API Endpoints Tests", (): void => {
         });
 
         const testPostObj2 = new PostModel({
-          _id: new ObjectId("63cecf1be39f7bf75daa01aa"),
+          _id: new ObjectId(process.env.TEST_OBJ_2),
           content: "I am REALLY inappropriate!",
           author: "author1",
           reportedInappropriate: true,
@@ -194,7 +205,7 @@ describe("API Endpoints Tests", (): void => {
         });
 
         const testModeratorObj = new ModeratorModel({
-          _id: new ObjectId("63cecf1be39f7bf75daa01b3"),
+          _id: new ObjectId(process.env.TEST_MOD_1),
           name: "mod1-test",
           activeReport: [],
           moderationCount: 0,
@@ -203,18 +214,18 @@ describe("API Endpoints Tests", (): void => {
 
         expect(Array.isArray(testModeratorObj.activeReport)).toEqual(true);
         expect(testModeratorObj.pushReport(testPostObj1)).toEqual([
-          new ObjectId("63cecf1be39f7bf75daa01a9"),
+          new ObjectId(process.env.TEST_OBJ_1),
         ]);
         expect(testModeratorObj.activeReport).toHaveLength(1);
         expect(testModeratorObj.pushReport(testPostObj2)).toEqual([
-          new ObjectId("63cecf1be39f7bf75daa01a9"),
+          new ObjectId(process.env.TEST_OBJ_1),
         ]);
         expect(testModeratorObj.activeReport).toHaveLength(1);
       });
 
       test("pushReport does NOT push a new post on to a Moderator object's activeReport array if it already contains an object", (): void => {
         const testPostObj1 = new PostModel({
-          _id: new ObjectId("63cecf1be39f7bf75daa01a9"),
+          _id: new ObjectId(process.env.TEST_OBJ_1),
           content: "I am inappropriate!",
           author: "author1",
           reportedInappropriate: true,
@@ -225,7 +236,7 @@ describe("API Endpoints Tests", (): void => {
         });
 
         const testPostObj2 = new PostModel({
-          _id: new ObjectId("63cecf1be39f7bf75daa01aa"),
+          _id: new ObjectId(process.env.TEST_OBJ_2),
           content: "I am REALLY inappropriate!",
           author: "author1",
           reportedInappropriate: true,
@@ -236,7 +247,7 @@ describe("API Endpoints Tests", (): void => {
         });
 
         const testModeratorObj = new ModeratorModel({
-          _id: new ObjectId("63cecf1be39f7bf75daa01b3"),
+          _id: new ObjectId(process.env.TEST_MOD_1),
           name: "mod1-test",
           activeReport: [testPostObj1._id],
           moderationCount: 0,
@@ -245,10 +256,10 @@ describe("API Endpoints Tests", (): void => {
 
         expect(Array.isArray(testModeratorObj.activeReport)).toEqual(true);
         expect(testModeratorObj.pushReport(testPostObj2)).toEqual([
-          new ObjectId("63cecf1be39f7bf75daa01a9"),
+          new ObjectId(process.env.TEST_OBJ_1),
         ]);
         expect(testModeratorObj.activeReport).toEqual(
-          expect.arrayContaining([new ObjectId("63cecf1be39f7bf75daa01a9")])
+          expect.arrayContaining([new ObjectId(process.env.TEST_OBJ_1)])
         );
       });
     });

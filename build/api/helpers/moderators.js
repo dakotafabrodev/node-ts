@@ -58,7 +58,9 @@ const updateModerator = (updatedModeratorObj) => __awaiter(void 0, void 0, void 
 });
 exports.updateModerator = updateModerator;
 const autoAssignReports = (unresolvedPosts, availableModerators) => __awaiter(void 0, void 0, void 0, function* () {
-    availableModerators.forEach((moderator, index) => __awaiter(void 0, void 0, void 0, function* () {
+    if (availableModerators.length <= 0)
+        return { msg: "No available moderators" };
+    yield availableModerators.forEach((moderator, index) => __awaiter(void 0, void 0, void 0, function* () {
         const post = unresolvedPosts[index];
         moderator.pushReport(post._id);
         moderator.isAvailable();
@@ -66,5 +68,6 @@ const autoAssignReports = (unresolvedPosts, availableModerators) => __awaiter(vo
         yield (0, exports.updateModerator)(moderator);
         yield (0, reports_1.updatePost)(post);
     }));
+    return { msg: "Unresolved posts auto-assigned to available moderators." };
 });
 exports.autoAssignReports = autoAssignReports;

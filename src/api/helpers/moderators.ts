@@ -67,8 +67,11 @@ export const updateModerator = async (
 export const autoAssignReports = async (
   unresolvedPosts: IPostDocument[],
   availableModerators: IModeratorDocument[]
-): Promise<void> => {
-  availableModerators.forEach(async (moderator, index): Promise<void> => {
+): Promise<object> => {
+  if (availableModerators.length <= 0)
+    return { msg: "No available moderators" };
+
+  await availableModerators.forEach(async (moderator, index): Promise<void> => {
     const post = unresolvedPosts[index];
     moderator.pushReport(post._id);
     moderator.isAvailable();
@@ -77,4 +80,6 @@ export const autoAssignReports = async (
     await updateModerator(moderator);
     await updatePost(post);
   });
+
+  return { msg: "Unresolved posts auto-assigned to available moderators." };
 };

@@ -128,7 +128,13 @@ router.put("/auto_assign", async (req: Request, res: Response) => {
     const unresolvedPosts = await getUnresolvedPosts();
     const availableModerators = await getAvailableModerators();
 
-    autoAssignReports(unresolvedPosts, availableModerators);
+    const autoAssign = await autoAssignReports(
+      unresolvedPosts,
+      availableModerators
+    );
+    console.log(autoAssign);
+
+    res.status(200).json(autoAssign);
   } catch (x) {
     console.error(x);
     res.status(400).json({ error: x });

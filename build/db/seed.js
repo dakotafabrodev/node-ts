@@ -9,10 +9,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
     });
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+const mongodb_1 = require("mongodb");
 const _1 = require(".");
 require("dotenv").config();
 const postSeed = [
     {
+        _id: new mongodb_1.ObjectId(process.env.TEST_OBJ_1),
         content: "I am inappropriate!",
         author: "author1",
         reportedInappropriate: true,
@@ -21,6 +23,7 @@ const postSeed = [
         moderatedBy: "",
     },
     {
+        _id: new mongodb_1.ObjectId(process.env.TEST_OBJ_2),
         content: "I am inappropriate!!",
         author: "author2",
         reportedInappropriate: true,
@@ -95,6 +98,7 @@ const postSeed = [
 ];
 const moderatorSeed = [
     {
+        _id: new mongodb_1.ObjectId(process.env.TEST_MOD_1),
         name: "mod1",
         activeReport: [],
         moderationCount: 0,
@@ -124,6 +128,7 @@ const seed = () => __awaiter(void 0, void 0, void 0, function* () {
         const seedModerators = yield _1.db
             .collection(_1.DB_COLLECTIONS.moderators)
             .insertMany(moderatorSeed);
+        console.log("Database seeded 🌱");
         return { seedMsg: seedPosts, moderatorMsg: seedModerators };
     }
     catch (x) {
@@ -131,3 +136,4 @@ const seed = () => __awaiter(void 0, void 0, void 0, function* () {
         return { error: x };
     }
 });
+seed();

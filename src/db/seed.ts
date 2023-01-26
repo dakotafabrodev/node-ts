@@ -1,8 +1,10 @@
+import { ObjectId } from "mongodb";
 import { DB_COLLECTIONS, db } from ".";
 require("dotenv").config();
 
 const postSeed = [
   {
+    _id: new ObjectId(process.env.TEST_OBJ_1),
     content: "I am inappropriate!",
     author: "author1",
     reportedInappropriate: true,
@@ -11,6 +13,7 @@ const postSeed = [
     moderatedBy: "",
   },
   {
+    _id: new ObjectId(process.env.TEST_OBJ_2),
     content: "I am inappropriate!!",
     author: "author2",
     reportedInappropriate: true,
@@ -87,6 +90,7 @@ const postSeed = [
 
 const moderatorSeed = [
   {
+    _id: new ObjectId(process.env.TEST_MOD_1),
     name: "mod1",
     activeReport: [],
     moderationCount: 0,
@@ -120,9 +124,12 @@ const seed = async (): Promise<object> => {
       .collection(DB_COLLECTIONS.moderators)
       .insertMany(moderatorSeed);
 
+    console.log("Database seeded 🌱");
     return { seedMsg: seedPosts, moderatorMsg: seedModerators };
   } catch (x) {
     console.error(x);
     return { error: x };
   }
 };
+
+seed();

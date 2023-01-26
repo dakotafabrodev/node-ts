@@ -97,6 +97,19 @@ router.put("/submit_report", jsonParser, (req, res) => __awaiter(void 0, void 0,
         res.status(400).json({ error: x });
     }
 }));
+router.put("/auto_assign", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const unresolvedPosts = yield (0, reports_1.getUnresolvedPosts)();
+        const availableModerators = yield (0, moderators_1.getAvailableModerators)();
+        const autoAssign = yield (0, moderators_1.autoAssignReports)(unresolvedPosts, availableModerators);
+        console.log(autoAssign);
+        res.status(200).json(autoAssign);
+    }
+    catch (x) {
+        console.error(x);
+        res.status(400).json({ error: x });
+    }
+}));
 router.post("/removed", jsonParser, (req, res) => {
     // this route will add an inappropriate resolved post to a REMOVED db collection
     // get req.body

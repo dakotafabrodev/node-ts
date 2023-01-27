@@ -46,7 +46,7 @@ Because of the flexiblity needed in this project (specifically with auto assigni
 
 ## 📦 Deployed Project
 
-[🌈 Lex Node.js Challenge - Dakota Fabro]()
+[🌈 Lex Node.js Challenge - Dakota Fabro]("https://nodejs-lex-backend.onrender.com")
 
 ## 🔗 Links
 

@@ -16,7 +16,7 @@ app.get("/", (req: Request, res: Response): void => {
     res.json({
       msg: "We out here, Lex!",
       api_docs:
-        "https://echo.notable.app/7ca407b4a3b1a8ef193ee3100ac69c8ab471a8bb1c2097654e794ffd4a60a211",
+        "Stay tuned!",
     });
   } catch (x) {
     console.error(x);
@@ -30,7 +30,7 @@ app.get("*", (req: Request, res: Response): void => {
   res.json({
     msg: "No routes matched!",
     api_docs:
-      "https://echo.notable.app/7ca407b4a3b1a8ef193ee3100ac69c8ab471a8bb1c2097654e794ffd4a60a211",
+      "Stay tuned!",
   });
 });
 

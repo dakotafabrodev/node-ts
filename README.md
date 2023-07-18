@@ -1,6 +1,4 @@
-# Lex Node.js Coding Challenge - Dakota Fabro 🌈
-
-Lex is looking for people who can build great software, so I took on the challenge to demonstrate my skills and willingness to learn! 🧠💪🏽🛠
+# Node.js Coding Challenge - Dakota Fabro 🌈
 
 This project features a Node.js + TS + Express API that:
 
@@ -19,10 +17,6 @@ TypeScript was my biggest hurdle while building the project because I had not wo
 - There are two routes that I would love to build (and probably will in the future just for my own learning and curiosity's sake...) that would allow a post that is resolved as inappropriate would be removed from the main "post" collection and moved into a "removed" collection. This would act like a sort of archive. I did not prioritize this functionality because I figured a post that is inappropriate could get deleted instead of archived to 1) save costs in terms of data usage and 2) save memory/computing time in terms of staying lightweight by deleting posts that would be otherwise hidden instead of holding on to them.
 
 - Utilize Mongoose's static methods by adding methods that allow for more abstraction of db calls. I was able to use helper functions for these, but would like to learn how to implement them using Mongoose's static methods so I can use Mongoose to its fullest potential.
-
-## 👏🏽 Acknowledgements
-
-- Team Lex 🌈 Thank you for the opportunity to learn, develop, and demonstrate my skillset with this assessment. I learned so much and really enjoyed building this API!
 
 ## 🛠 Tech Stack
 
@@ -46,7 +40,7 @@ Because of the flexiblity needed in this project (specifically with auto assigni
 
 ## 📦 Deployed Project
 
-[🌈 Lex Node.js Challenge - Dakota Fabro](https://nodejs-lex-backend.onrender.com)
+[🌈 Node.js Challenge - Dakota Fabro](https://nodejs-lex-backend.onrender.com)
 
 ## 🔗 Links
 

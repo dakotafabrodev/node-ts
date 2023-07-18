@@ -10,7 +10,7 @@ This project features a Node.js + TS + Express API that:
 
 ## 💪🏽 Challenges
 
-TypeScript was my biggest hurdle while building the project because I had not worked with TypeScript in the past. Being that Javascript is the language I am most comfortable with, the learning curve was not too steep. I was able to pick up TS quickly as I was building the project and have grown to love it! I love TS now (shoutout to June!)! I have experience with C++ and C# so having to work with types was not too challenging, but I do enjoy that TS is essentially a wonderful combo of JS and C++/C#!
+TypeScript was my biggest hurdle while building the project because I had not worked with TypeScript in the past. Being that Javascript is the language I am most comfortable with, the learning curve was not too steep. I was able to pick up TS quickly as I was building the project and have grown to love it! I love TS now! I have experience with C++ and C# so having to work with types was not too challenging, but I do enjoy that TS is essentially a wonderful combo of JS and C++/C#!
 
 ## 🚧 If I Had More Time - Under Construction
 

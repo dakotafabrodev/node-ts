@@ -1,4 +1,4 @@
-# Node.js Coding Challenge - Dakota Fabro 🌈
+# Node.js + TypeScript - Dakota Fabro 👾
 
 This project features a Node.js + TS + Express API that:
 

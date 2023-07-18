@@ -40,7 +40,7 @@ Because of the flexiblity needed in this project (specifically with auto assigni
 
 ## 📦 Deployed Project
 
-[🌈 Node.js Challenge - Dakota Fabro](https://nodejs-lex-backend.onrender.com)
+[Node.js + TypeScript - Dakota Fabro](https://nodejs-lex-backend.onrender.com)
 
 ## 🔗 Links
 
